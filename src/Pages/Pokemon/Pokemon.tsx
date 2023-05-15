@@ -1,5 +1,5 @@
+import { PageWrapper } from '../../Components/Layout/PageWrapper'
 import { PokemonDetails } from '../../Components/PokemonDetails'
-import PageWrapper from '../../Components/Layout/PageWrapper/Component'
 
 const Pokemon: React.FC = () => {
     return (

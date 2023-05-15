@@ -1,8 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react'
 
 import usePokemonSearch from '../../Utils/hooks/usePokemonSearch'
-import PageWrapper from '../../Components/Layout/PageWrapper/Component'
 import PokemonGrid from '../../Components/PokemonGrid/Component'
+import { PageWrapper } from '../../Components/Layout/PageWrapper'
 
 const Home: React.FC = () => {
     const [offset, setOffset] = useState(0)
