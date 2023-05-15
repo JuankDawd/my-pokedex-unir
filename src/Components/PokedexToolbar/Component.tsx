@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppBar, Avatar, Button, Container, Grid, Toolbar, Typography } from '@mui/material'
-import { Favorite, CatchingPokemon } from '@mui/icons-material'
-import { PATHS } from '../../Utils/Routes'
+import { Favorite, CatchingPokemon, Person } from '@mui/icons-material'
 import { Box } from '@mui/system'
+
+import { PATHS } from '../../Utils/Routes'
 
 import { SearchInput } from '..'
 
@@ -16,8 +17,7 @@ interface PokedexToolbarProps {
 const PokedexToolbar: React.FC<PokedexToolbarProps> = ({ onChange }) => {
     const navigate = useNavigate()
 
-    const goHome = (): void => navigate(PATHS.HOME)
-    const goFavorites = (): void => navigate(PATHS.FAVORITES)
+    const goTo = (path: string): void => navigate(path)
     return (
         <Fragment>
             <AppBar color="transparent" elevation={0} position="fixed" sx={{ backgroundColor: 'background.paper' }}>
@@ -31,7 +31,7 @@ const PokedexToolbar: React.FC<PokedexToolbarProps> = ({ onChange }) => {
                                     sx={{
                                         cursor: 'pointer',
                                     }}
-                                    onClick={goHome}
+                                    onClick={() => goTo(PATHS.HOME)}
                                 >
                                     <Grid item sx={{ mr: 1 }}>
                                         <Avatar
@@ -61,33 +61,19 @@ const PokedexToolbar: React.FC<PokedexToolbarProps> = ({ onChange }) => {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={5}>
                                 <Box sx={{ width: '100%' }}>
                                     <SearchInput onChange={onChange} />
                                 </Box>
                             </Grid>
-                            <Grid item xs={3}>
-                                <Button
-                                    sx={{
-                                        px: 0,
-                                        py: 0,
-                                        width: 50,
-                                        height: 24,
-                                    }}
-                                    onClick={goFavorites}
-                                    endIcon={<Favorite sx={{ fontSize: 24, color: 'red' }} />}
-                                >
-                                    <Typography
-                                        variant="h6"
-                                        sx={{
-                                            fontSize: '16px',
-                                            lineHeight: '24px',
-                                            fontWeight: 400,
-                                            color: '#000',
-                                        }}
-                                    >
-                                        {'Favorites'}
-                                    </Typography>
+                            <Grid item xs={2}>
+                                <Button onClick={() => goTo(PATHS.FAVORITES)} endIcon={<Favorite />}>
+                                    <Typography variant="body1">{'Favorites'}</Typography>
+                                </Button>
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Button onClick={() => goTo(PATHS.SESSION)} endIcon={<Person />}>
+                                    <Typography variant="body1">{'Session'}</Typography>
                                 </Button>
                             </Grid>
                         </Grid>
