@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { PokemonInterface } from '../interfaces/pokemon.interface'
 
-export interface PokemonStateStoreInterface {
+export interface PokemonStoreInterface {
     pokemons: PokemonInterface[]
 }
 
-const initialState: PokemonStateStoreInterface = {
+const initialState: PokemonStoreInterface = {
     pokemons: [],
 }
 

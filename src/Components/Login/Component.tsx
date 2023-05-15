@@ -1,6 +1,8 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Button, Grid, IconButton, Link, OutlinedInput, Typography } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { getUserId } from '../../Utils/services/userSlice'
 
 interface LoginProps {
     handleLogin: (_n: any) => void
@@ -9,14 +11,23 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ handleLogin }) => {
     const [showPassword, setShowPassword] = useState(false)
 
-    const [password, setPassword] = useState('')
-    const [username, setUsername] = useState('')
+    const username = 'JuanDawd'
+    // eslint-disable-next-line react-redux/useSelector-prefer-selectors
+    const userId = useSelector((state: any) => getUserId(state, username))
+    const [user, setUser] = useState({
+        username: '',
+        password: '',
+    })
+    useEffect(() => {
+        console.log(userId)
+    }, [])
 
-    const handlePasswordChange = (event: any) => setPassword(event.target.value)
-    const handleUsernameChange = (event: any) => setUsername(event.target.value)
+    const handleUserChange = ({ key, event }: { key: string; event: any }): void => {
+        setUser((user) => ({ ...user, [key]: event.target.value }))
+    }
 
-    const handleLogIn = (): boolean => {
-        return password !== '' && username !== ''
+    const getUsername = () => {
+        console.log({ msg: 'Out Of Slices', username })
     }
 
     const handleShowPassword = () => setShowPassword((showPassword) => !showPassword)
@@ -33,8 +44,8 @@ const Login: React.FC<LoginProps> = ({ handleLogin }) => {
                     sx={{ width: '100%', height: 'auto' }}
                     placeholder={'Username'}
                     margin="dense"
-                    onChange={handleUsernameChange}
-                    value={username}
+                    onChange={(e) => handleUserChange({ key: 'username', event: e })}
+                    value={user.username}
                     type={'text'}
                 />
             </Grid>
@@ -49,8 +60,8 @@ const Login: React.FC<LoginProps> = ({ handleLogin }) => {
                     sx={{ width: '100%', height: 'auto' }}
                     placeholder={'Password'}
                     margin="dense"
-                    onChange={handlePasswordChange}
-                    value={password}
+                    onChange={(e) => handleUserChange({ key: 'password', event: e })}
+                    value={user.password}
                     endAdornment={
                         <IconButton onClick={handleShowPassword} size="small">
                             {showPassword ? <Visibility /> : <VisibilityOff />}
@@ -60,7 +71,7 @@ const Login: React.FC<LoginProps> = ({ handleLogin }) => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <Button sx={{ width: '100%', height: 'auto' }} variant="outlined" onClick={() => handleLogIn()}>
+                <Button sx={{ width: '100%', height: 'auto' }} variant="outlined" onClick={() => getUsername()}>
                     <Typography variant="body1">Log In</Typography>
                 </Button>
             </Grid>

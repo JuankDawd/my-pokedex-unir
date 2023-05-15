@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { PokemonInterface } from '../interfaces/pokemon.interface'
 
-export interface FavoriteStateStoreInterface {
+export interface FavoriteStoreInterface {
     favorites: PokemonInterface[]
 }
 
-const initialState: FavoriteStateStoreInterface = {
+const initialState: FavoriteStoreInterface = {
     favorites: [],
 }
 
