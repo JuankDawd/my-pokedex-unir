@@ -9,7 +9,7 @@ import { PATHS } from '../../Utils/Routes'
 import { SearchInput } from '..'
 
 import './Component.scss'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { getusername } from '../../Utils/services/userSlice'
 
 interface PokedexToolbarProps {

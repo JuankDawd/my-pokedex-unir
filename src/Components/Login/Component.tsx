@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { login } from '../../Utils/services/userSlice'
 import { AuthController } from '../../Utils/API/Controllers/Auth.Controller'
+import { useNavigate } from 'react-router-dom'
+import { PATHS } from '../../Utils/Routes'
 
 interface LoginProps {
     handleLogin: (_n: any) => void
@@ -11,6 +13,7 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ handleLogin, handlePopUp }) => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const [showPassword, setShowPassword] = useState(false)
 
@@ -41,6 +44,7 @@ const Login: React.FC<LoginProps> = ({ handleLogin, handlePopUp }) => {
                     uuid,
                 }
                 dispatch(login(payload))
+                setTimeout(() => navigate(PATHS.HOME), 1500)
             }
             handlePopUp(message, header)
         }

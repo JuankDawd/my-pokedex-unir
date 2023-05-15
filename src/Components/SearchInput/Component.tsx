@@ -1,8 +1,8 @@
 import { CircularProgress, Grid, OutlinedInput } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import { styled } from '@mui/material/styles'
-import './Component.scss'
 import { Search } from '@mui/icons-material'
+import './Component.scss'
 interface SearchInputProps {
     onChange: (_n: any) => void
 }
@@ -14,8 +14,6 @@ const OutlinedInputStyled = styled(OutlinedInput)(({ theme }) => ({
     borderRadius: 4,
 }))
 
-let timmer = 0
-
 const SearchInput: React.FC<SearchInputProps> = ({ onChange }) => {
     const inputRef = useRef(null)
     const [search, setSearch] = useState('')
@@ -26,7 +24,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onChange }) => {
 
         const searchLowerCase = search.toLowerCase()
 
-        timmer = setTimeout(() => {
+        const timmer = setTimeout(() => {
             setAdornment(<Search fontSize="large" color="disabled" />)
             onChange(searchLowerCase)
         }, 500)
