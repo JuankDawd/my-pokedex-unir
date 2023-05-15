@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppBar, Avatar, Button, Container, Grid, Toolbar, Typography } from '@mui/material'
-import { Favorite, CatchingPokemon, Person } from '@mui/icons-material'
+import { Favorite, CatchingPokemon, Person, Logout } from '@mui/icons-material'
 import { Box } from '@mui/system'
 
 import { PATHS } from '../../Utils/Routes'
@@ -9,8 +9,8 @@ import { PATHS } from '../../Utils/Routes'
 import { SearchInput } from '..'
 
 import './Component.scss'
-import { useSelector } from 'react-redux'
-import { getusername } from '../../Utils/services/userSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { getusername, logout } from '../../Utils/services/userSlice'
 
 interface PokedexToolbarProps {
     onChange: (_n: any) => void
@@ -19,7 +19,13 @@ interface PokedexToolbarProps {
 const PokedexToolbar: React.FC<PokedexToolbarProps> = ({ onChange }) => {
     const username = useSelector(getusername)
     const navigate = useNavigate()
-
+    const dispatch = useDispatch()
+    const handleSessionButton = (value: boolean) => {
+        if (value) {
+            dispatch(logout())
+        }
+        goTo(PATHS.SESSION)
+    }
     const goTo = (path: string): void => navigate(path)
     return (
         <Fragment>
@@ -75,9 +81,15 @@ const PokedexToolbar: React.FC<PokedexToolbarProps> = ({ onChange }) => {
                                 </Button>
                             </Grid>
                             <Grid item xs={2}>
-                                <Button onClick={() => goTo(PATHS.SESSION)} endIcon={<Person />}>
-                                    <Typography variant="body1">{username === '' ? 'Log In' : username}</Typography>
-                                </Button>
+                                {username === '' ? (
+                                    <Button onClick={() => handleSessionButton(false)} endIcon={<Person />}>
+                                        <Typography variant="body1">{'Log In'}</Typography>
+                                    </Button>
+                                ) : (
+                                    <Button onClick={() => handleSessionButton(true)} endIcon={<Logout />}>
+                                        <Typography variant="body1">{username}</Typography>
+                                    </Button>
+                                )}
                             </Grid>
                         </Grid>
                     </Container>
