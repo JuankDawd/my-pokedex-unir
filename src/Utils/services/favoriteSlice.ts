@@ -24,6 +24,6 @@ export const favoriteSlice = createSlice({
 
 export const { addFavorite, removeFavorite } = favoriteSlice.actions
 
-export const getFavorites = (state): PokemonInterface[] => state.favorite.favorites
+export const getFavorites = (state: any): PokemonInterface[] => state.favorite.favorites
 
 export default favoriteSlice.reducer

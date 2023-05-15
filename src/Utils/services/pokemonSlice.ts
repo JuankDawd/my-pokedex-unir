@@ -21,6 +21,6 @@ export const pokemonSlice = createSlice({
 
 export const { addPokemons } = pokemonSlice.actions
 
-export const getPokemons = (state): PokemonInterface[] => state.pokemon.pokemons
+export const getPokemons = (state: any): PokemonInterface[] => state.pokemon.pokemons
 
 export default pokemonSlice.reducer
