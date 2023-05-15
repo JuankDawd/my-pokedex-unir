@@ -1,3 +1,6 @@
+import { UserInterface } from './interfaces/user.interface'
+import { v4 as uuidv4 } from 'uuid'
+
 const getPokemonId = (url: string): number => +url.split('/')[6]
 
 const getPokemonImage = (url: string): string => {
@@ -48,4 +51,32 @@ const handleTypeColor = (type: string): string => {
     }
 }
 
-export { getPokemonImage, handleTypeColor }
+export const mockedUsers: UserInterface[] = [
+    {
+        username: 'john.doe',
+        password: 'password1',
+        uuid: uuidv4(),
+    },
+    {
+        username: 'jane.doe',
+        password: 'password2',
+        uuid: uuidv4(),
+    },
+    {
+        username: 'michael.johnson',
+        password: 'password3',
+        uuid: uuidv4(),
+    },
+    {
+        username: 'samantha.smith',
+        password: 'password4',
+        uuid: uuidv4(),
+    },
+    {
+        username: 'emily_jackson',
+        password: 'passw0rd',
+        uuid: uuidv4(),
+    },
+]
+
+export { getPokemonImage, handleTypeColor, uuidv4 }

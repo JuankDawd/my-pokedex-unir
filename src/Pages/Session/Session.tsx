@@ -4,25 +4,32 @@ import { Container, Snackbar } from '@mui/material'
 
 const Session: React.FC = () => {
     const [login, setLogin] = useState(false)
-    const [error, setError] = useState('')
+    const [popUpInfo, setPopUpInfo] = useState({
+        message: '',
+        title: '',
+    })
     const handleLogin = (): void => setLogin(!login)
-    const handleErrors = (message: string): void => setError(message)
+    const handlePopUp = (message: string, title: string): void => setPopUpInfo({ message, title })
 
-    const handleTitle = (): string => (login ? 'Login' : 'Register')
+    const handleTitle = (): string => (!login ? 'Login' : 'Register')
     return (
         <PageWrapper>
             <SessionWrapper title={handleTitle()}>
                 <Container maxWidth="md" sx={{ width: '100vw', backgroundColor: '#F5F5F5', borderRadius: '8px', padding: '10px 0 10px 0' }}>
-                    {login ? <Login handleLogin={handleLogin} /> : <Register handleLogin={handleLogin} handleError={handleErrors} />}
+                    {!login ? (
+                        <Login handleLogin={handleLogin} handlePopUp={handlePopUp} />
+                    ) : (
+                        <Register handleLogin={handleLogin} handlePopUp={handlePopUp} />
+                    )}
                     <Snackbar
-                        open={error !== ''}
+                        open={popUpInfo.title !== ''}
                         autoHideDuration={6000}
-                        onClose={(): void => setError('')}
-                        message={error}
+                        onClose={(): void => setPopUpInfo({ message: '', title: '' })}
+                        message={popUpInfo.message}
                         sx={{
                             width: '100%',
                             '& .MuiSnackbarContent-root': {
-                                backgroundColor: '#f44336',
+                                backgroundColor: popUpInfo.title === 'Fail' ? '#f44336' : 'GREEN',
                                 color: '#fff',
                                 fontSize: '16px',
                                 lineHeight: '24px',

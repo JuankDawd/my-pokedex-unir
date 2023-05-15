@@ -9,12 +9,15 @@ import { PATHS } from '../../Utils/Routes'
 import { SearchInput } from '..'
 
 import './Component.scss'
+import { useDispatch, useSelector } from 'react-redux'
+import { getusername } from '../../Utils/services/userSlice'
 
 interface PokedexToolbarProps {
     onChange: (_n: any) => void
 }
 
 const PokedexToolbar: React.FC<PokedexToolbarProps> = ({ onChange }) => {
+    const username = useSelector(getusername)
     const navigate = useNavigate()
 
     const goTo = (path: string): void => navigate(path)
@@ -73,7 +76,7 @@ const PokedexToolbar: React.FC<PokedexToolbarProps> = ({ onChange }) => {
                             </Grid>
                             <Grid item xs={2}>
                                 <Button onClick={() => goTo(PATHS.SESSION)} endIcon={<Person />}>
-                                    <Typography variant="body1">{'Session'}</Typography>
+                                    <Typography variant="body1">{username === '' ? 'Log In' : username}</Typography>
                                 </Button>
                             </Grid>
                         </Grid>

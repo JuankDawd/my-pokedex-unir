@@ -1,4 +1,4 @@
-import { Avatar, Button, Container, Grid, IconButton, Typography } from '@mui/material'
+import { Avatar, Box, Button, Container, Grid, IconButton, Typography } from '@mui/material'
 import React from 'react'
 import './Component.scss'
 import { Favorite } from '@mui/icons-material'
@@ -7,6 +7,7 @@ import { PokemonInterface } from '../../Utils/interfaces/pokemon.interface'
 import { addFavorite, getFavorites, removeFavorite } from '../../Utils/services/favoriteSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { getPokemonImage } from '../../Utils'
+import { PageWrapper } from '..'
 
 interface PokemonGridProps {
     pokemons: PokemonInterface[]
@@ -31,6 +32,30 @@ const PokemonFiltered: React.FC<PokemonGridProps> = ({ pokemons }) => {
     }
 
     const goToPokemon = (pokemon: PokemonInterface): void => navigate(`/pokemon/${pokemon.name}`)
+
+    if (pokemons.length === 0) {
+        return (
+            <PageWrapper>
+                <Box
+                    minHeight="60vh"
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#F5F5F5',
+                        height: '60vh',
+                        width: '60vw',
+                        borderRadius: 2,
+                    }}
+                    maxWidth="sm"
+                >
+                    <Typography variant="h4" component="h4" align="center">
+                        No pokemon found
+                    </Typography>
+                </Box>
+            </PageWrapper>
+        )
+    }
 
     return (
         <Container

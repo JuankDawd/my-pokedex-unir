@@ -1,36 +1,50 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Button, Grid, IconButton, Link, OutlinedInput, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { getUserId } from '../../Utils/services/userSlice'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { login } from '../../Utils/services/userSlice'
+import { AuthController } from '../../Utils/API/Controllers/Auth.Controller'
 
 interface LoginProps {
     handleLogin: (_n: any) => void
+    handlePopUp: (_n: string, _a: string) => void
 }
 
-const Login: React.FC<LoginProps> = ({ handleLogin }) => {
+const Login: React.FC<LoginProps> = ({ handleLogin, handlePopUp }) => {
+    const dispatch = useDispatch()
     const [showPassword, setShowPassword] = useState(false)
 
-    const username = 'JuanDawd'
-    // eslint-disable-next-line react-redux/useSelector-prefer-selectors
-    const userId = useSelector((state: any) => getUserId(state, username))
     const [user, setUser] = useState({
         username: '',
         password: '',
     })
-    useEffect(() => {
-        console.log(userId)
-    }, [])
 
     const handleUserChange = ({ key, event }: { key: string; event: any }): void => {
         setUser((user) => ({ ...user, [key]: event.target.value }))
     }
 
-    const getUsername = () => {
-        console.log({ msg: 'Out Of Slices', username })
-    }
-
     const handleShowPassword = () => setShowPassword((showPassword) => !showPassword)
+
+    const handleEmptyFields = (): boolean => {
+        return user.username !== '' && user.password !== ''
+    }
+    const onSubmit = () => {
+        const emptyFields = handleEmptyFields()
+        if (!emptyFields) handlePopUp('There is atleast a empty field', 'Fail')
+
+        if (emptyFields) {
+            const [message, header, uuid] = AuthController.login(user)
+
+            if (uuid) {
+                const payload = {
+                    ...user,
+                    uuid,
+                }
+                dispatch(login(payload))
+            }
+            handlePopUp(message, header)
+        }
+    }
     return (
         <Grid container spacing={2}>
             <Grid
@@ -71,7 +85,7 @@ const Login: React.FC<LoginProps> = ({ handleLogin }) => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <Button sx={{ width: '100%', height: 'auto' }} variant="outlined" onClick={() => getUsername()}>
+                <Button sx={{ width: '100%', height: 'auto' }} variant="outlined" onClick={() => onSubmit()}>
                     <Typography variant="body1">Log In</Typography>
                 </Button>
             </Grid>

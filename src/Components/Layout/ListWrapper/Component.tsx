@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 import { PokemonInterface } from '../../../Utils/interfaces/pokemon.interface'
 import { ListItem } from '../ListItem'
+import { PageWrapper } from '../PageWrapper'
+import { Box, Typography } from '@mui/material'
 
 interface ListWrapperProps {
     pokemons: PokemonInterface[]
@@ -8,6 +10,7 @@ interface ListWrapperProps {
 }
 const ListWrapper: React.FC<ListWrapperProps> = ({ pokemons, lastPokemonElementRef }) => {
     const handleListLength = (pokemonList: PokemonInterface[]): number => pokemonList.length
+
     return (
         <Fragment>
             {pokemons.map((pokemon, index) => (

@@ -6,6 +6,7 @@ import { ROUTES } from './Utils/Routes'
 import { PokedexController } from './Utils/API/Controllers/Pokedex.controller'
 import { addPokemons } from './Utils/services/pokemonSlice'
 import { Snackbar } from '@mui/material'
+import { mockedUsers } from './Utils'
 
 const App: React.FC = () => {
     const [error, setError] = useState('')
@@ -23,6 +24,13 @@ const App: React.FC = () => {
         }
 
         getPokemonList()
+    }, [])
+    useEffect(() => {
+        if (!localStorage.getItem('users')) {
+            const usersJson = JSON.stringify(mockedUsers)
+
+            localStorage.setItem('users', usersJson)
+        }
     }, [])
     return (
         <BrowserRouter>

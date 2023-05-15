@@ -1,15 +1,15 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Button, Grid, IconButton, Link, OutlinedInput, Typography } from '@mui/material'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { login, register } from '../../Utils/services/userSlice'
+import { AuthController } from '../../Utils/API/Controllers/Auth.Controller'
+import { uuidv4 } from '../../Utils'
 
 interface RegisterProps {
     handleLogin: (_n: any) => void
-    handleError: (_n: string) => void
+    handlePopUp: (_n: string, _a: string) => void
 }
 
-const Register: React.FC<RegisterProps> = ({ handleLogin, handleError }) => {
+const Register: React.FC<RegisterProps> = ({ handleLogin, handlePopUp }) => {
     const [showPasswords, setShowPasswords] = useState({
         password: false,
         passwordConfirmation: false,
@@ -19,8 +19,6 @@ const Register: React.FC<RegisterProps> = ({ handleLogin, handleError }) => {
         password: '',
         passwordConfirmation: '',
     })
-
-    const dispatch = useDispatch()
 
     const handleShowPassword = ({ key, value }: { key: string; value: boolean }): void => {
         setShowPasswords((showPasswords) => ({ ...showPasswords, [key]: !value }))
@@ -41,13 +39,15 @@ const Register: React.FC<RegisterProps> = ({ handleLogin, handleError }) => {
     const handleOnSubmit = (): void => {
         const passVal = handlePasswordValidation()
         const emptyFields = handleEmptyFields()
-        if (!passVal) handleError('The passwords dont match')
-        if (!emptyFields) handleError('There is a empty field')
-        console.log({ msg: 'outside', passVal, emptyFields })
+        if (!passVal) handlePopUp('The passwords dont match', 'Fail')
+        if (!emptyFields) handlePopUp('There is a empty field', 'Fail')
+
         if (passVal && emptyFields) {
-            console.log('We are here')
             const { ['passwordConfirmation']: _, ...userReg } = user
-            dispatch(register(userReg))
+            const userFormed = { ...userReg, uuid: uuidv4() }
+            // Later
+            const [message, header] = AuthController.register(userFormed)
+            handlePopUp(message, header)
         }
     }
 
