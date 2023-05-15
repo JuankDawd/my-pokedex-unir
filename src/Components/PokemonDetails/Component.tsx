@@ -2,15 +2,15 @@ import { Box, Chip, Container, Link, List, ListItem, Modal, Snackbar, Typography
 
 import React, { useEffect, useState } from 'react'
 import { handleTypeColor } from '../../Utils'
-import { Scrollbar, A11y, Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { PokedexController } from '../../Utils/API/Controllers/Pokedex.controller'
 import { PokemonDetailed, PokemonDetailedEmpty } from '../../Utils/interfaces/getPokemon.interface'
 import { useLocation } from 'react-router-dom'
 import { AbilityDetails } from '../../Utils/interfaces/pokemon.interface'
-import 'swiper/scss'
+
 import 'swiper/scss/navigation'
 import 'swiper/scss/pagination'
+import 'swiper/scss'
 
 const PokemonDetails: React.FC = () => {
     const style = {
@@ -54,7 +54,7 @@ const PokemonDetails: React.FC = () => {
         getPokemon()
     }, [location])
 
-    const handleOpen = async (ability): Promise<void> => {
+    const handleOpen = async (ability: any): Promise<void> => {
         const abilityId = ability.ability.url.split('/')[6]
 
         const resp = await PokedexController.getAbilityDescription(abilityId)
@@ -85,14 +85,14 @@ const PokemonDetails: React.FC = () => {
         return removeLastSprite
     }
 
-    const handleAbilityInfo = ({ effect_entries, generation, name }): void => {
+    const handleAbilityInfo = ({ effect_entries, generation, name }: { effect_entries: any; generation: any; name: string }): void => {
         const [{ effect, short_effect }] = effect_entries.filter(({ language: { name } }) => name === 'en')
         const { name: generationName } = generation
 
         setAbility({ effect, short_effect, generationName, name })
     }
 
-    const handleGeneration = (generation): string => {
+    const handleGeneration = (generation: string): string => {
         generation = generation.replace('-', ' ')
         generation = generation.replace('generation', 'Gen')
         generation = generation.replaceAll('i', 'I')
@@ -121,13 +121,7 @@ const PokemonDetails: React.FC = () => {
                 {pokemon?.name}
             </Typography>
             {pokemon && (
-                <Swiper
-                    modules={[Navigation, Pagination, Scrollbar, A11y]}
-                    spaceBetween={10}
-                    slidesPerView={3}
-                    pagination={{ clickable: true }}
-                    loop={true}
-                >
+                <Swiper spaceBetween={10} slidesPerView={2} pagination={{ clickable: true }} loop>
                     {handleSprites(pokemon).map((sprite, index) => (
                         <SwiperSlide key={index}>
                             <img src={sprite} alt={pokemon.name} />

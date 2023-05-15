@@ -1,37 +1,16 @@
 import React, { useCallback, useRef, useState } from 'react'
-import { PokedexToolbar } from '../../Components/PokedexToolbar'
 import PokemonGrid from '../../Components/PokemonGrid/Component'
 
 import useFavoriteSearch from '../../Utils/hooks/useFavoritesSearch'
-import { Container } from '@mui/system'
 import { Box, Typography } from '@mui/material'
-import { useSelector } from 'react-redux'
-import { PokemonInterface } from '../../Utils/interfaces/pokemon.interface'
-import { getPokemons } from '../../Utils/services/pokemonSlice'
-import { PokemonFiltered } from '../../Components/PokemonFiltered'
 import PageWrapper from '../../Components/Layout/PageWrapper/Component'
 
 const Favorites: React.FC = () => {
     const [offset, setOffset] = useState(0)
-    const [pokemonsFiltered, setPokemonsFiltered] = useState<PokemonInterface[]>([])
-    const [search, setSearch] = useState('')
-    const pokemonList = useSelector(getPokemons)
 
     const { favorites, loading, hasMore } = useFavoriteSearch({ offset })
 
     const observer = useRef<IntersectionObserver>()
-
-    const handleChangeSearch = (search: string): void => {
-        const filteredArr = pokemonList.filter((pokemon) => pokemon.name.includes(search))
-
-        if (search === '') {
-            setPokemonsFiltered([])
-            setSearch('')
-        } else {
-            setPokemonsFiltered(filteredArr)
-            setSearch(search)
-        }
-    }
 
     const lastPokemonElementRef = useCallback(
         (node: Element) => {
@@ -52,41 +31,31 @@ const Favorites: React.FC = () => {
 
     if (favorites.length === 0) {
         return (
-            <Container>
-                {/* PokedexToolbar  */}
-                <PokedexToolbar onChange={handleChangeSearch} />
-                {search === '' ? (
-                    <Box
-                        minHeight="60vh"
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            backgroundColor: '#F5F5F5',
-                            height: '60vh',
-                            width: '60vw',
-                            borderRadius: 2,
-                        }}
-                        maxWidth="sm"
-                    >
-                        <Typography variant="h4" component="h4" align="center">
-                            No favorites found
-                        </Typography>
-                    </Box>
-                ) : (
-                    <PokemonFiltered pokemons={pokemonsFiltered} />
-                )}
-            </Container>
+            <PageWrapper>
+                <Box
+                    minHeight="60vh"
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#F5F5F5',
+                        height: '60vh',
+                        width: '60vw',
+                        borderRadius: 2,
+                    }}
+                    maxWidth="sm"
+                >
+                    <Typography variant="h4" component="h4" align="center">
+                        No favorites found
+                    </Typography>
+                </Box>
+            </PageWrapper>
         )
     }
 
     return (
-        <PageWrapper pokemonList={pokemonList} onSubmitSearch={setSearch} onSubmitFilters={setPokemonsFiltered}>
-            {search === '' ? (
-                <PokemonGrid pokemons={favorites} favoritePage={true} lastPokemonElementRef={lastPokemonElementRef} />
-            ) : (
-                <PokemonFiltered pokemons={pokemonsFiltered} />
-            )}
+        <PageWrapper>
+            <PokemonGrid pokemons={favorites} favoritePage={true} lastPokemonElementRef={lastPokemonElementRef} />
         </PageWrapper>
     )
 }

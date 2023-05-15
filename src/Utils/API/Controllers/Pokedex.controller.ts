@@ -10,7 +10,7 @@ class PokedexControllerApi {
             const response = await api.get(`${this.path}?limit=${limit}&offset=${offset}`)
 
             return response
-        } catch (err) {
+        } catch (err: any) {
             return err.response
         }
     }
@@ -20,7 +20,7 @@ class PokedexControllerApi {
             const response = await api.get(`${this.path}/${name}`)
 
             return response
-        } catch (err) {
+        } catch (err: any) {
             return err.response
         }
     }
@@ -30,7 +30,7 @@ class PokedexControllerApi {
             const response = await api.get(`ability/${ability}`)
 
             return response
-        } catch (err) {
+        } catch (err: any) {
             return err.response
         }
     }
