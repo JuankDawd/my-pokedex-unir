@@ -1,12 +1,11 @@
 import { FunctionComponent } from 'react'
-import { Favorites } from '../Pages/Favorites'
-import { Home } from '../Pages/Home'
-import { Pokemon } from '../Pages/Pokemon'
+import { Favorites, Home, Pokemon, Session } from '../Pages'
 
 export const PATHS = {
     HOME: '/',
     DETAILED: 'pokemon/:name',
     FAVORITES: '/favorites',
+    SESSION: '/session',
 }
 
 interface RouteType {
@@ -30,5 +29,10 @@ export const ROUTES: RouteType[] = [
         title: 'Favorites',
         path: PATHS.FAVORITES,
         component: Favorites,
+    },
+    {
+        title: 'Session',
+        path: PATHS.SESSION,
+        component: Session,
     },
 ]

@@ -55,9 +55,11 @@ export const mainTheme = createTheme({
             fontSize: '1em',
         },
         body1: {
-            lineHeight: '16px',
-            fontSize: '1em',
+            fontSize: '16px',
+            lineHeight: '24px',
             fontWeight: 400,
+            color: '#000',
+            textTransform: 'capitalize',
         },
     },
     shape: {
