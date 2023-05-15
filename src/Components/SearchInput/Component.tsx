@@ -24,9 +24,11 @@ const SearchInput: React.FC<SearchInputProps> = ({ onChange }) => {
     useEffect(() => {
         setAdornment(<CircularProgress size={16} />)
 
+        const searchLowerCase = search.toLowerCase()
+
         timmer = setTimeout(() => {
             setAdornment(<Search fontSize="large" color="disabled" />)
-            onChange(search)
+            onChange(searchLowerCase)
         }, 500)
         return () => clearTimeout(timmer)
     }, [search])
