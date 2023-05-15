@@ -1,12 +1,13 @@
+import React, { Fragment } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AppBar, Avatar, Button, Container, Grid, Toolbar, Typography } from '@mui/material'
 import { Favorite, CatchingPokemon } from '@mui/icons-material'
-import React from 'react'
-import { Fragment } from 'react'
-import './Component.scss'
-import { useNavigate } from 'react-router-dom'
 import { PATHS } from '../../Utils/Routes'
 import { Box } from '@mui/system'
-import { SearchInput } from '../SearchInput'
+
+import { SearchInput } from '..'
+
+import './Component.scss'
 
 interface PokedexToolbarProps {
     onChange: (_n: any) => void

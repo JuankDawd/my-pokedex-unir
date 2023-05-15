@@ -1,5 +1,5 @@
 import { Container } from '@mui/material'
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { PokedexToolbar } from '../../PokedexToolbar'
 import { PokemonInterface } from '../../../Utils/interfaces/pokemon.interface'
 import { PokemonFiltered } from '../../PokemonFiltered'
@@ -28,7 +28,7 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children }) => {
     return (
         <Container sx={{ width: '100%' }}>
             <PokedexToolbar onChange={handleChangeSearch} />
-            {search === '' ? <Fragment>{children}</Fragment> : <PokemonFiltered pokemons={pokemonsFiltered} />}
+            {search === '' ? children : <PokemonFiltered pokemons={pokemonsFiltered} />}
         </Container>
     )
 }

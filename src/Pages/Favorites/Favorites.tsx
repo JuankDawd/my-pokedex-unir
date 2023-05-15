@@ -1,9 +1,9 @@
 import React, { useCallback, useRef, useState } from 'react'
-import PokemonGrid from '../../Components/PokemonGrid/Component'
 
-import useFavoriteSearch from '../../Utils/hooks/useFavoritesSearch'
 import { Box, Typography } from '@mui/material'
-import { PageWrapper } from '../../Components/Layout/PageWrapper'
+import useFavoriteSearch from '../../Utils/hooks/useFavoritesSearch'
+
+import { PageWrapper, PokemonGrid } from '../../Components'
 
 const Favorites: React.FC = () => {
     const [offset, setOffset] = useState(0)
