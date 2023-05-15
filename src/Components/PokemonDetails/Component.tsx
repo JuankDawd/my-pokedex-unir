@@ -75,7 +75,7 @@ const PokemonDetails: React.FC = () => {
 
         if (pokemonList === undefined || pokemonList === null || keys.length === 0) return []
 
-        const sprites = pokemonList.sprites
+        const sprites: any = pokemonList.sprites
 
         const spritesArray = Object.keys(sprites).map((key) => sprites[key])
         const filteredSprites = spritesArray.filter((sprite) => sprite !== null && sprite !== undefined && sprite !== '')
@@ -86,7 +86,7 @@ const PokemonDetails: React.FC = () => {
     }
 
     const handleAbilityInfo = ({ effect_entries, generation, name }: { effect_entries: any; generation: any; name: string }): void => {
-        const [{ effect, short_effect }] = effect_entries.filter(({ language: { name } }) => name === 'en')
+        const [{ effect, short_effect }] = effect_entries.filter(({ language: { name } }: any) => name === 'en')
         const { name: generationName } = generation
 
         setAbility({ effect, short_effect, generationName, name })
