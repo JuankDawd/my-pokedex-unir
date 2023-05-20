@@ -16,10 +16,9 @@ To get a local copy up and running follow these simple steps.
 
 1. Clone the repo
 
-greet('World');
-`sh
-    git clone https://github.com/your_username_/Project-Name.git
-    `
+```sh
+    git clone https://github.com/JuankDawd/my-pokedex-unir.git
+ ```
 
 2. Install NPM packages
 
